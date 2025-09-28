@@ -1,0 +1,56 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--<div *ngFor="let record of recordBoxes; let i = index" class="record-box" (close)="closeFloatingBox(i)"
+                    [style.zIndex]="record.z || 1" cdkDrag>
+                    Box: {{ record.id }}
+                    <button class="close-button" (click)="closeFloatingBox(i)">×</button>
+                </div>-->
+                <app-record-popup *ngFor="let record of recordBoxes; let i = index" [recordBox]="record"
+                    (close)="closeBox(record)" (onDragEnd)="onDragEnd($event, record)"
+                    (bringToFront)="bringToFront($event)" [style.zIndex]="record.z || 1">
+                </app-record-popup>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Incidents Table</h4>
+                    <p class="category"> <a class="empty-link" (click)="rearrangeRecords()">Show all opened</a> / 
+                        <a class="empty-link" (click)="restoreRecords()">Restore</a> / 
+                        <a class="empty-link" (click)="closeAll()">Close All</a>
+                    </p>
+                </div>
+
+                <div *ngIf="!loading" class="content table-responsive table-full-width">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let cell of tableData1.headerRow">{{ cell }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let row of tableData1.dataRows">
+                                <td *ngFor="let cell of row; let i = index">
+                                    <span *ngIf="i === 0" (click)="onRowClick(cell)"
+                                        style="cursor: pointer; color: blue; text-decoration: underline;">
+                                        <a>{{cell}}</a>
+                                    </span>
+                                    <span *ngIf="i != 0">
+                                        {{cell}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

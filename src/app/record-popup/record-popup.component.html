@@ -1,0 +1,124 @@
+<!-- 
+<div   
+                    class="record-box"
+                    [cdkDragFreeDragPosition]="{ x: record.x, y: record.y }"
+                    (cdkDragEnded)="onDragEnd($event, i)"
+                    (mousedown)="bringToFront(record)"
+                    (touchstart)="bringToFront(record)"
+                    (close)="closeBox(i)"
+                    [style.zIndex]="record.z || 1"
+                cdkDrag >
+                    Box: {{ record.id }}
+
+                </div>  -->
+
+<div class="record-box" [cdkDragFreeDragPosition]="{ x: recordBox.x, y: recordBox.y }"
+  (cdkDragEnded)="dragEnded($event)" (mousedown)="onMouseDown()" (touchstart)="onTouchStart()"
+  [ngStyle]="{'width': recordBox.width + 'px', 'height': recordBox.height + 'px' }" [style.zIndex]="recordBox.z || 1"
+  cdkDrag>
+  <div class="content">
+
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-{{ recordBox.isNarrow ? 12 : 8 }}">
+            <div class="card">
+              <div class="header">
+                <button class="close-button" (click)="closePopup()">×</button>
+                <h4 class="title">Edit {{ recordBox.id }}</h4>
+              </div>
+              <div class="content">
+                <form>
+                  <div class="row" *ngFor="let rowField of renderFields; let rowIndex = index">
+
+                    <div class="col-md-{{ field.size }}" *ngFor="let field of rowField">
+                      <div class="form-group">
+                        <label>{{ field.displayName }}</label>
+                        <span *ngIf="field.inputType === 'text'">
+                          <input type="text" class="form-control" [value]="data[field.fieldName]"
+                            [readonly]="field.readOnly || false" [required]="field.required || false"
+                            (input)="data[field.fieldName] = $event.target.value" />
+                        </span>
+                        <span *ngIf="field.inputType === 'select'">
+                          <input type="text" class="form-control" [value]="data[field.fieldName]"
+                            [readonly]="field.readOnly || false" [required]="field.required || false"
+                            (input)="data[field.fieldName] = $event.target.value" />
+                        </span>
+                        <span *ngIf="field.inputType === 'date'">
+                          <input type="text" class="form-control" [value]="data[field.fieldName]"
+                            [readonly]="field.readOnly || false" [required]="field.required || false"
+                            (input)="data[field.fieldName] = $event.target.value" />
+                        </span>
+                        <span *ngIf="field.inputType === 'textarea'">
+                          <textarea type="text" class="form-control" rows="{{field.options?.rows || 3}}"
+                            [value]="data[field.fieldName]" [readonly]="field.readOnly || false"
+                            [required]="field.required || false" (input)="data[field.fieldName] = $event.target.value">
+                          </textarea>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button (click)="closePopup()" class="btn btn-neutral btn-fill pull-right">Close</button>
+                      <button type="submit" class="btn btn-info btn-fill pull-right">Save</button>
+
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!recordBox.isNarrow" class="col-md-4">
+
+            <div class="card card-user">
+              <div class="image">
+                <img
+                  src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400"
+                  alt="..." />
+              </div>
+              <div class="content">
+                <div class="author">
+                  <a href="#">
+                    <img class="avatar border-gray" src="assets/img/faces/face-3.jpg" alt="..." />
+
+                    <h4 class="title">{{ data['First Name'] }} {{ data['Last Name']}}<br />
+                      <small>{{ data['Customer Login ID']}} </small>
+                    </h4>
+                  </a>
+                </div>
+                <p class="description text-center"> {{ data['Department']}} <br>
+                  <span *ngIf="data['VIP'] == 'Yes'" style="color: gold; font-weight: bold;">VIP Customer</span>
+                  <span *ngIf="data['VIP'] != 'Yes'">Regular Customer</span>
+                </p>
+              </div>
+              <hr>
+              <div class="text-center">
+                <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
+                <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
+                <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <mat-tab-group>
+          <mat-tab label="Tasks"> Tasks </mat-tab>
+          <mat-tab label="Configuration Items"> Configuration Items </mat-tab>
+          <mat-tab label="Related Items"> Related items </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div> -->
+
+
+
+
+  </div>
+</div>
